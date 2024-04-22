@@ -11,18 +11,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/Registrati"
         android:layout_width="220dp"
         android:layout_height="64dp"
-        android:text="Registrati"
+        android:layout_marginTop="44dp"
+        android:text="@string/registrati"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="591dp" />
+        app:layout_constraintTop_toBottomOf="@+id/Messaggioschermo1" />
 
     <EditText
         android:id="@+id/Email"
@@ -53,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
+        app:layout_constraintGuide_end="185dp" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -66,27 +70,28 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/piadinapartylogo" />
 
+
     <TextView
         android:id="@+id/Messaggioschermo1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
         android:text="Non possiedi un account?"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3"
-        tools:layout_editor_absoluteY="545dp" />
-
+        app:layout_constraintTop_toBottomOf="@+id/Accedi" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/Accedi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Accedi"
+        android:layout_marginTop="44dp"
+        android:text="@string/accedi"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="444dp" />
+        app:layout_constraintTop_toBottomOf="@+id/Password" />
 </androidx.constraintlayout.widget.ConstraintLayout>

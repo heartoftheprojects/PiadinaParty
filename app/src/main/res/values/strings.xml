@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PiadinaParty</string>
+    <string name="registrati">registrati</string>
+    <string name="accedi">accedi</string>
 </resources>
