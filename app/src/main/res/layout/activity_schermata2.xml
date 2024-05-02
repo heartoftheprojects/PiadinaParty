@@ -9,20 +9,17 @@
 
 
     <!-- Contenuto principale della schermata -->
+
+    <!-- NavigationView per il menu a tendina -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#FFA500">
+        android:background="#FFA500"
+        android:orientation="vertical">
 
         <!-- Toolbar che apre il menù a tendina se cliccato-->
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="90dp"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
 
         <TextView
             android:layout_width="match_parent"
@@ -32,11 +29,6 @@
             android:textAlignment="center"
             android:textSize="32sp" />
 
-        <ListView
-            android:id="@+id/menuPiadineListView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -46,23 +38,17 @@
             android:textAlignment="center"
             android:textSize="32sp" />
 
-        <ListView
-            android:id="@+id/menuBevandeListView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="Conferma Ordine" />
+            android:text="Conferma Ordine"
+            android:textSize="20sp" />
 
 
     </LinearLayout>
 
-    <!-- NavigationView per il menu a tendina -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
@@ -74,31 +60,6 @@
     <!-- Questo layout rappresenta un singolo elemento del
     menu all'interno del ListView, che include nome dell'articolo
     e un campo di input per la quantità desiderata-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="8dp">
-
-        <!-- Aggiungi TextView per il nome dell'articolo -->
-        <TextView
-            android:id="@+id/menuPiadineItemNameTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="ciccio"
-            android:textSize="18sp"/>
-
-        <!-- Aggiungi EditText per la quantità -->
-        <EditText
-            android:id="@+id/quantityEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:textSize="18sp"
-            tools:text="0" />
-
-    </LinearLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
 
