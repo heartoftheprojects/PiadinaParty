@@ -19,5 +19,13 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        //pulsante registrazione
+        val btnRegistrati = findViewById<Button>(R.id.Registrati)
+
+        btnRegistrati.setOnClickListener {
+            val intent = Intent(this, activity_schermata1_1::class.java)
+            startActivity(intent)
+        }
     }
 }
