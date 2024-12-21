@@ -2,4 +2,6 @@
     <string name="app_name">PiadinaParty</string>
     <string name="registrati">registrati</string>
     <string name="accedi">accedi</string>
+    <string name="apri">Apri</string>
+    <string name="close">Close</string>
 </resources>

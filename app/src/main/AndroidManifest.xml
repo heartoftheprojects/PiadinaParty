@@ -21,6 +21,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".activityHome" />
+        <activity android:name=".activityInserimentoDatiOrdine" />
+        <activity android:name=".activityRiepilogoOrdine" />
+        <activity android:name=".activityConfermaOrdine" />
+        <activity android:name=".activityProfiloUtente" />
+        <activity android:name=".activityOfferte" />
+        <activity android:name=".activityOrdiniFrequenti" />
+
     </application>
 
 </manifest>
