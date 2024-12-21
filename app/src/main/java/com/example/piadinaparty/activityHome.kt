@@ -38,8 +38,8 @@ class activityHome : AppCompatActivity() {
             popupMenu.show()
         }
 
-        val menuPiadineListView = findViewById<ListView>(R.id.menuPiadineListView)
-        val menuBevandeListView = findViewById<ListView>(R.id.menuBevandeListView)
+        val menuPiadineListView = findViewById<ListView>(R.id.recyclerPiadine)
+        val menuBevandeListView = findViewById<ListView>(R.id.recyclerBibite)
 
         val piadine = arrayOf("niente", "guerino", "ciccio")
         val bevande = arrayOf("acqua", "vino", "birra")
