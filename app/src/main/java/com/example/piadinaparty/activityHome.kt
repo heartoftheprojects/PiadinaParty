@@ -8,6 +8,9 @@ import android.widget.Button
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.piadinaparty.ProductAdapter
 
 class activityHome : AppCompatActivity() {
 
@@ -38,32 +41,42 @@ class activityHome : AppCompatActivity() {
             popupMenu.show()
         }
 
-        val menuPiadineListView = findViewById<ListView>(R.id.recyclerPiadine)
-        val menuBevandeListView = findViewById<ListView>(R.id.recyclerBibite)
+        //val rvPiadine = findViewById<RecyclerView>(R.id.recyclerPiadine)
+        //rvPiadine.adapter = piadineAdapter
 
-        val piadine = arrayOf("niente", "guerino", "ciccio")
-        val bevande = arrayOf("acqua", "vino", "birra")
+        // RecyclerView per le bibite
+        //val rvBibite = findViewById<RecyclerView>(R.id.recyclerBibite)
+        //rvBibite.layoutManager = LinearLayoutManager(this)
+        //val bibiteAdapter = ProductAdapter(listOf("Coca Cola", "Fanta", "Acqua Naturale", "Acqua Frizzante"))
+        //rvBibite.adapter = bibiteAdapter
 
-        val adapterPiadine = ArrayAdapter(
-            this,
-            android.R.layout.simple_list_item_1,
-            piadine
-        )
+        //val btnConferma = findViewById<Button>(R.id.button)
+        //btnConferma.setOnClickListener {
+            // Ottieni gli elementi selezionati da entrambe le liste
+            //val piadineSelezionate = piadineAdapter.getSelectedItems()
+            //val bibiteSelezionate = bibiteAdapter.getSelectedItems()
 
-        val adapterBevande = ArrayAdapter(
-            this,
-            android.R.layout.simple_list_item_1,
-            bevande
-        )
+            // Mostra i prodotti selezionati (ad esempio con un Toast)
+            //val ordine = "Piadine: ${piadineSelezionate.joinToString(", ")}\nBibite: ${bibiteSelezionate.joinToString(", ")}"
+            //Toast.makeText(this, ordine, Toast.LENGTH_LONG).show()
 
-        menuPiadineListView.adapter = adapterPiadine
-        menuBevandeListView.adapter = adapterBevande
+            // Crea un Intent per passare ai dati dell'ordine
+            //val intent = Intent(this, activityInserimentoDatiOrdine::class.java)
 
-        val btnConferma = findViewById<Button>(R.id.button)
+            // Passa i dati (le liste di piadine e bibite selezionate) all'Intent
+            //intent.putStringArrayListExtra("piadine", ArrayList(piadineSelezionate))
+            //intent.putStringArrayListExtra("bibite", ArrayList(bibiteSelezionate))
 
-        btnConferma.setOnClickListener {
-            val intent = Intent(this, activityInserimentoDatiOrdine::class.java)
-            startActivity(intent)
-        }
+            // Avvia la nuova Activity
+            //startActivity(intent)
+        //}
+
+
+        //val btnConferma = findViewById<Button>(R.id.button)
+
+        //btnConferma.setOnClickListener {
+          //  val intent = Intent(this, activityInserimentoDatiOrdine::class.java)
+            //startActivity(intent)
+        //}
     }
 }
