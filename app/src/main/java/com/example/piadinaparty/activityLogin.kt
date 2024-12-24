@@ -6,8 +6,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.piadinaparty.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-
 
 class activityLogin : AppCompatActivity() {
 
@@ -29,7 +27,7 @@ class activityLogin : AppCompatActivity() {
                     .addOnCompleteListener(this){task ->
                         if (task.isSuccessful){
                             Toast.makeText(this,"Login avvenuto correttamente!",Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this,MainActivity::class.java)
+                            val intent = Intent(this,activityHome::class.java)
                             startActivity(intent)
                             finish()
                         }else{
