@@ -21,10 +21,10 @@ class activityLogin : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         binding.loginButton.setOnClickListener{
-            val email = binding.loginEmail.text.toString()
-            val password = binding.loginPassword.text.toString()
+            val email = binding.LoginEmail.text.toString()
+            val password = binding.LoginPassword.text.toString()
 
-            if(email.isNotEmpity() && password.isNotEmpity()){
+            if(email.isNotEmpty() && password.isNotEmpty()){
                 firebaseAuth.signInWithEmailAndPassword(email,password)
                     .addOnCompleteListener(this){task ->
                         if (task.isSuccessful){
@@ -42,7 +42,7 @@ class activityLogin : AppCompatActivity() {
 
             }
         }
-        binding.signupText.setOnClickListener{
+        binding.Messaggioschermo1.setOnClickListener{
             startActivity(Intent(this,activityRegistrazione::class.java))
             finish()
         }
