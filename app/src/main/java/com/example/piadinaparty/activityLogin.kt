@@ -27,7 +27,8 @@ class activityLogin : AppCompatActivity() {
                     .addOnCompleteListener(this){task ->
                         if (task.isSuccessful){
                             Toast.makeText(this,"Login avvenuto correttamente!",Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this,activityHome::class.java)
+                            val intent = Intent(this, MainActivity::class.java)
+                            intent.putExtra("FRAGMENT_TO_LOAD", "HOME_FRAGMENT")
                             startActivity(intent)
                             finish()
                         }else{

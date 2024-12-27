@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_home"
+        android:title="Home"
+        android:icon="@drawable/house_solid"/>
+
+    <item
+        android:id="@+id/bottom_offerte"
+        android:title="Offerte"
+        android:icon="@drawable/utensils_solid"/>
+
+    <item
+        android:id="@+id/bottom_ordinifrequenti"
+        android:title="Ordini più frequenti"
+        android:icon="@drawable/arrow_rotate_right_solid"/>
+
+    <item
+        android:id="@+id/bottom_utente"
+        android:title="Utente"
+        android:icon="@drawable/user_solid"/>
+
+</menu>

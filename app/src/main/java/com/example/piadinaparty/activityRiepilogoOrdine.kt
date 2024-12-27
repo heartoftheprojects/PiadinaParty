@@ -12,6 +12,12 @@ class activityRiepilogoOrdine : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_riepilogoordine)
 
+        val selectedItems = intent.getStringArrayExtra("selectedItems")
+        val totalPrice = intent.getDoubleExtra("totalPrice", 0.0)
+
+        //findViewById<TextView>(R.id.orderSummaryTextView).text = selectedItems?.joinToString("\n")
+        //findViewById<TextView>(R.id.totalPriceTextView).text = "Totale: €$totalPrice"
+
         // Trova i TextView per visualizzare i dati
         val riepilogoTextView = findViewById<TextView>(R.id.textView2)
         val totaleTextView = findViewById<TextView>(R.id.textView3)
@@ -37,7 +43,7 @@ class activityRiepilogoOrdine : AppCompatActivity() {
         // Gestisci il click del bottone "Annulla ordine"
         annullaButton.setOnClickListener {
             // Torna alla ActivitySchermata2
-            val intent = Intent(this, activityHome::class.java)
+            val intent = Intent(this, fragmentHome::class.java)
             startActivity(intent)
             finish() // Chiude la schermata corrente (Activity4)
         }

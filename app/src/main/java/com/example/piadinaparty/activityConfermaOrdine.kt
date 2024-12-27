@@ -34,7 +34,7 @@ class activityConfermaOrdine : AppCompatActivity() {
         // Gestisci il click del bottone "Effettua un altro ordine"
         buttonNuovoOrdine.setOnClickListener {
             // Naviga a ActivitySchermata2 per fare un altro ordine
-            val intent = Intent(this, activityHome::class.java)
+            val intent = Intent(this, fragmentHome::class.java)
             startActivity(intent)
             finish() // Chiude l'activity corrente (Activity4_1)
         }
