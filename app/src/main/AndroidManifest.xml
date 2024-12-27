@@ -27,6 +27,8 @@
             android:name=".activityRegistrazione"
             android:exported="true" />
 
+        <activity android:name=".activityInserimentoDatiOrdine" />
+
         <activity
             android:name=".MainActivity"
             android:exported="false" />

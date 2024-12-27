@@ -43,6 +43,15 @@
         android:layout_marginBottom="16dp"
         android:layout_weight="1" />
 
+    <TextView
+        android:id="@+id/totalOrderTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Totale: €0.00"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
     <!-- Pulsante per confermare l'ordine -->
     <Button
         android:id="@+id/ConfermaBottom"
