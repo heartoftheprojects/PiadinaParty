@@ -27,6 +27,8 @@ class activityConfermaOrdine : AppCompatActivity() {
 
         // Gestisci il click del bottone "Chiudi"
         buttonChiudi.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
             // Chiude l'applicazione (chiude l'activity corrente)
             finish() // oppure puoi usare: System.exit(0) per chiudere l'app
         }
@@ -34,7 +36,7 @@ class activityConfermaOrdine : AppCompatActivity() {
         // Gestisci il click del bottone "Effettua un altro ordine"
         buttonNuovoOrdine.setOnClickListener {
             // Naviga a ActivitySchermata2 per fare un altro ordine
-            val intent = Intent(this, fragmentHome::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish() // Chiude l'activity corrente (Activity4_1)
         }
