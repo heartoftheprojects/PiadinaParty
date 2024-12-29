@@ -186,15 +186,21 @@ class activityInserimentoDatiOrdine : AppCompatActivity() {
                 }
             }
 
-            // Naviga a activityRiepilogoOrdine senza passare i dati
-            val intent = Intent(this, activityRiepilogoOrdine::class.java)
+            // Passa i dati all'activityRiepilogoOrdine
+            val intent = Intent(this, activityRiepilogoOrdine::class.java).apply {
+                putExtra("indirizzo", indirizzo)
+                putExtra("orario", orario)
+                putExtra("pagamento", pagamento)
+            }
             startActivity(intent)
         }
 
         // Gestisci il click del bottone "Indietro"
         indietroButton.setOnClickListener {
-            // Quando viene cliccato il bottone "Indietro", torna alla precedente activity
-            finish() // Chiama finish per chiudere activityInserimentoDatiOrdine e tornare alla precedente
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK) //Si usa il flag FLAG_ACTIVITY_CLEAR_TOP per assicurarti che tutte le activity sopra la MainActivity vengano rimosse dallo stack.
+            startActivity(intent)
+            finish()
         }
     }
 }

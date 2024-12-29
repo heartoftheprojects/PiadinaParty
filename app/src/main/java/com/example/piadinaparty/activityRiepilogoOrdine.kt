@@ -12,56 +12,45 @@ class activityRiepilogoOrdine : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_riepilogoordine)
 
-        val selectedItems = intent.getStringArrayExtra("selectedItems")
-        val totalPrice = intent.getDoubleExtra("totalPrice", 0.0)
-
-        //findViewById<TextView>(R.id.orderSummaryTextView).text = selectedItems?.joinToString("\n")
-        //findViewById<TextView>(R.id.totalPriceTextView).text = "Totale: €$totalPrice"
-
-        // Trova i TextView per visualizzare i dati
-        val riepilogoTextView = findViewById<TextView>(R.id.textView2)
-        val totaleTextView = findViewById<TextView>(R.id.textView3)
-        val puntiTextView = findViewById<TextView>(R.id.textView4)
-
-        // Trova i pulsanti "Annulla ordine", "Indietro" e "Conferma"
-        val annullaButton = findViewById<Button>(R.id.button2)
-        val indietroButton = findViewById<Button>(R.id.button3)
-        val confermaButton = findViewById<Button>(R.id.button4)
-
-        // Recupera i dati dall'Intent (passati dalla schermata precedente)
+        // Recupera i dati dall'intent
         val indirizzo = intent.getStringExtra("indirizzo")
         val orario = intent.getStringExtra("orario")
         val pagamento = intent.getStringExtra("pagamento")
 
-        // Visualizza i dati nella TextView
-        riepilogoTextView.text = "Indirizzo: $indirizzo\nOrario: $orario\nPagamento: $pagamento"
+        // Trova i TextView nel layout
+        val indirizzoTextView = findViewById<TextView>(R.id.textView2)
+        val orarioTextView = findViewById<TextView>(R.id.textView3)
+        val pagamentoTextView = findViewById<TextView>(R.id.textView4)
 
-        // Visualizza il totale e i punti
-        //totaleTextView.text = "Totale: €$totale"
-        //puntiTextView.text = "Punti totalizzati: $punti"
+        // Imposta i dati nei TextView
+        indirizzoTextView.text = "Indirizzo: $indirizzo"
+        orarioTextView.text = "Data e ora: $orario"
+        pagamentoTextView.text = "Metodo di pagamento: $pagamento"
 
-        // Gestisci il click del bottone "Annulla ordine"
+        // Trova i pulsanti nel layout
+        val annullaButton = findViewById<Button>(R.id.button2)
+        val confermaButton = findViewById<Button>(R.id.button4)
+        val indietroButton = findViewById<Button>(R.id.button3)
+
+        // Gestisci il click del bottone "Annulla Ordine"
         annullaButton.setOnClickListener {
-            // Torna alla ActivitySchermata2
-            val intent = Intent(this, fragmentHome::class.java)
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
-            finish() // Chiude la schermata corrente (Activity4)
-        }
-
-        // Gestisci il click del bottone "Indietro"
-        indietroButton.setOnClickListener {
-            // Torna a ActivitySchermata3
-            val intent = Intent(this, activityInserimentoDatiOrdine::class.java)
-            startActivity(intent)
-            finish() // Chiude la schermata corrente (Activity4)
+            finish()
         }
 
         // Gestisci il click del bottone "Conferma"
         confermaButton.setOnClickListener {
-            // Naviga a ActivitySchermata4_1
             val intent = Intent(this, activityConfermaOrdine::class.java)
             startActivity(intent)
-            finish() // Chiude la schermata corrente (Activity4)
+        }
+
+        // Gestisci il click del bottone "Indietro"
+        indietroButton.setOnClickListener {
+            val intent = Intent(this, activityInserimentoDatiOrdine::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 }

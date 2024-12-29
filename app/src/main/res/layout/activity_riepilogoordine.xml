@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#FFA500">
 
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="409dp"
@@ -22,7 +21,7 @@
         android:id="@+id/textView2"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
-        android:text="Qui dovranno essere presenti i dati inseriti dall'utente\nindirizzo:\ndata e ora:\nmetodo di pagamento:"
+        android:text="Indirizzo:"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -31,7 +30,7 @@
         android:id="@+id/textView3"
         android:layout_width="203dp"
         android:layout_height="30dp"
-        android:text="Totale: "
+        android:text="Data e ora:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -39,7 +38,7 @@
         android:id="@+id/textView4"
         android:layout_width="205dp"
         android:layout_height="30dp"
-        android:text="Punti totalizzati:"
+        android:text="Metodo di pagamento:"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 

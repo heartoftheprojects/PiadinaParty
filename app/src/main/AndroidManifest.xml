@@ -29,6 +29,8 @@
 
         <activity android:name=".activityInserimentoDatiOrdine" />
         <activity android:name=".activityRiepilogoOrdine" />
+        <activity android:name=".activityConfermaOrdine" />
+
 
         <activity
             android:name=".MainActivity"
