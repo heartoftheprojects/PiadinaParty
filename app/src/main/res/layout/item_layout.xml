@@ -32,9 +32,9 @@
             android:id="@+id/remove_button"
             android:layout_width="56dp"
             android:layout_height="56dp"
+            android:gravity="center"
             android:text="@string/remove_button_text"
-            android:textSize="18sp"
-            android:gravity="center" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/item_quantity"
