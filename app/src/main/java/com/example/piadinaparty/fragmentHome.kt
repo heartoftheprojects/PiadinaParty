@@ -54,10 +54,10 @@ class fragmentHome : Fragment() {
     }
 
     private fun populateLists() {
-        piadineList.add(Item("Prosciutto crudo e mozzarella", 5.0))
-        piadineList.add(Item("Salame e formaggio", 4.5))
-        bevandeList.add(Item("Coca Cola", 2.0))
-        bevandeList.add(Item("Acqua", 1.0))
+        piadineList.add(Item("Niente", 5.0, description = "salsiccia, patatine e doppia salsa"))
+        piadineList.add(Item("Salame e formaggio", 4.5, description = "Salame e formaggio fresco"))
+        bevandeList.add(Item("Coca Cola", 2.0, description = "Bibita gassata"))
+        bevandeList.add(Item("Acqua", 1.0, description = "Acqua naturale"))
         piadineAdapter.notifyDataSetChanged()
         bevandeAdapter.notifyDataSetChanged()
     }

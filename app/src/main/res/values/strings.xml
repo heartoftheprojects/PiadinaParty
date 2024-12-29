@@ -4,6 +4,8 @@
     <string name="accedi">accedi</string>
     <string name="apri">Apri</string>
     <string name="close">Close</string>
+    <string name="add_button_text">+</string>
+    <string name="remove_button_text">-</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

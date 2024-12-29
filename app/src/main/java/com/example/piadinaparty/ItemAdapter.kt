@@ -14,6 +14,7 @@ class ItemAdapter(private val items: List<Item>, private val onItemClicked: () -
         val nameTextView: TextView = itemView.findViewById(R.id.item_name)
         val priceTextView: TextView = itemView.findViewById(R.id.item_price)
         val quantityTextView: TextView = itemView.findViewById(R.id.item_quantity)
+        val descriptionTextView: TextView = itemView.findViewById(R.id.item_description)
         val addButton: Button = itemView.findViewById(R.id.add_button)
         val removeButton: Button = itemView.findViewById(R.id.remove_button)
 
@@ -21,6 +22,7 @@ class ItemAdapter(private val items: List<Item>, private val onItemClicked: () -
             nameTextView.text = item.name
             priceTextView.text = "€%.2f".format(item.price)
             quantityTextView.text = item.quantity.toString()
+            descriptionTextView.text = item.description
             addButton.setOnClickListener {
                 item.quantity++
                 quantityTextView.text = item.quantity.toString()
