@@ -1,4 +1,4 @@
-package com.example.piadinaparty
+package com.example.piadinaparty.view
 
 import android.app.TimePickerDialog
 import android.content.Intent
@@ -8,9 +8,11 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.piadinaparty.MainActivity
+import com.example.piadinaparty.R
 import java.util.Calendar
 
-class activityInserimentoDatiOrdine : AppCompatActivity() {
+class ActivityInserimentoDatiOrdine : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -143,6 +145,7 @@ class activityInserimentoDatiOrdine : AppCompatActivity() {
             val indirizzo = indirizzoEditText.text.toString()
             val orario = orarioButton.text.toString()
             val pagamento = pagamentoSpinner.selectedItem.toString()
+            val totalOrder = intent.getDoubleExtra("totalOrder", 0.0)
 
             // Validazione dei dati
             if (indirizzo.isEmpty()) {
@@ -187,10 +190,11 @@ class activityInserimentoDatiOrdine : AppCompatActivity() {
             }
 
             // Passa i dati all'activityRiepilogoOrdine
-            val intent = Intent(this, activityRiepilogoOrdine::class.java).apply {
+            val intent = Intent(this, ActivityRiepilogoOrdine::class.java).apply {
                 putExtra("indirizzo", indirizzo)
                 putExtra("orario", orario)
                 putExtra("pagamento", pagamento)
+                putExtra("totalOrder", totalOrder)
             }
             startActivity(intent)
         }

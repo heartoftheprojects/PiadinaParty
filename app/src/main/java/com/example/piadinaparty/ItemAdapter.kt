@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.piadinaparty.model.Item
 
 class ItemAdapter(private val items: List<Item>, private val onItemClicked: () -> Unit) :
     RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {

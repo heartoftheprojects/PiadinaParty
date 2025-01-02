@@ -1,4 +1,4 @@
-package com.example.piadinaparty
+package com.example.piadinaparty.model
 
 data class Item(
     val name: String,

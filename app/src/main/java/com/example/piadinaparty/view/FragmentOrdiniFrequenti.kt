@@ -1,14 +1,13 @@
-package com.example.piadinaparty
+package com.example.piadinaparty.view
 
 import androidx.fragment.app.Fragment
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import com.example.piadinaparty.R
 
-class fragmentOrdiniFrequenti: Fragment() {
+class FragmentOrdiniFrequenti: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_ordinifrequenti, container, false) }

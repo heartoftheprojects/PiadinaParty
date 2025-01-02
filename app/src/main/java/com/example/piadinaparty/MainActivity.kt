@@ -1,19 +1,13 @@
 package com.example.piadinaparty
 
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import android.content.Intent
-import android.widget.Button
-import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.piadinaparty.view.FragmentHome
+import com.example.piadinaparty.view.FragmentUtenti
+import com.example.piadinaparty.view.FragmentOfferte
+import com.example.piadinaparty.view.FragmentOrdiniFrequenti
 import com.google.android.material.bottomnavigation.BottomNavigationView
-
-//import com.example.piadinaparty.ProductAdapter
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,26 +19,21 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
-            when(menuItem.itemId)
-            {
-                R.id.bottom_home ->
-                {
-                    replaceFragment(fragmentHome())
+            when(menuItem.itemId) {
+                R.id.bottom_home -> {
+                    replaceFragment(FragmentHome())
                     true
                 }
-                R.id.bottom_utente ->
-                {
-                    replaceFragment(fragmentUtenti())
+                R.id.bottom_utente -> {
+                    replaceFragment(FragmentUtenti())
                     true
                 }
-                R.id.bottom_offerte ->
-                {
-                    replaceFragment(fragmentOfferte())
+                R.id.bottom_offerte -> {
+                    replaceFragment(FragmentOfferte())
                     true
                 }
-                R.id.bottom_ordinifrequenti ->
-                {
-                    replaceFragment(fragmentOrdiniFrequenti())
+                R.id.bottom_ordinifrequenti -> {
+                    replaceFragment(FragmentOrdiniFrequenti())
                     true
                 }
                 else -> false
@@ -55,12 +44,11 @@ class MainActivity : AppCompatActivity() {
             bottomNavigationView.selectedItemId = R.id.bottom_home
         } else {
             // Carica il HomeFragment come predefinito
-            replaceFragment(fragmentHome())
+            replaceFragment(FragmentHome())
         }
     }
 
-    private fun replaceFragment(fragment: Fragment)
-    {
+    private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit()
     }
 }

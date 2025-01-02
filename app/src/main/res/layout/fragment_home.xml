@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#FFA500"
-    tools:context="fragmentHome">
+    tools:context=".view.FragmentHome">
 
     <!-- Titolo lista piadine -->
     <TextView

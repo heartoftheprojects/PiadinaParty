@@ -1,4 +1,4 @@
-package com.example.piadinaparty
+package com.example.piadinaparty.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,11 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.piadinaparty.model.Item
+import com.example.piadinaparty.ItemAdapter
+import com.example.piadinaparty.R
 
-class fragmentHome : Fragment() {
+class FragmentHome : Fragment() {
 
     private lateinit var piadineAdapter: ItemAdapter
     private lateinit var bevandeAdapter: ItemAdapter
@@ -46,8 +50,16 @@ class fragmentHome : Fragment() {
 
         // Imposta il listener per il pulsante di conferma
         view.findViewById<Button>(R.id.ConfermaBottom).setOnClickListener {
-            val intent = Intent(activity, activityInserimentoDatiOrdine::class.java)
-            startActivity(intent)
+            val offerPrice = arguments?.getDouble("offerPrice", 0.0) ?: 0.0
+            val total = calculateTotalOrder(offerPrice)
+            if (total > 0) {
+                val intent = Intent(activity, ActivityInserimentoDatiOrdine::class.java).apply {
+                    putExtra("totalOrder", total)
+                }
+                startActivity(intent)
+            } else {
+                Toast.makeText(activity, "Seleziona almeno una piadina o una bevanda per procedere", Toast.LENGTH_SHORT).show()
+            }
         }
 
         return view
@@ -63,6 +75,11 @@ class fragmentHome : Fragment() {
     }
 
     private fun updateOrder() {
+        val total = calculateTotalOrder()
+        totalOrderTextView.text = "Totale: €%.2f".format(total)
+    }
+
+    private fun calculateTotalOrder(offerPrice: Double = 0.0): Double {
         var total = 0.0
         for (item in piadineList) {
             total += item.price * item.quantity
@@ -70,6 +87,7 @@ class fragmentHome : Fragment() {
         for (item in bevandeList) {
             total += item.price * item.quantity
         }
-        totalOrderTextView.text = "Totale: €%.2f".format(total)
+        total += offerPrice
+        return total
     }
 }

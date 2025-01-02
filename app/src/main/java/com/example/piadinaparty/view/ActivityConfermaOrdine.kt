@@ -1,4 +1,4 @@
-package com.example.piadinaparty
+package com.example.piadinaparty.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,8 +6,10 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.piadinaparty.MainActivity
+import com.example.piadinaparty.R
 
-class activityConfermaOrdine : AppCompatActivity() {
+class ActivityConfermaOrdine : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +40,7 @@ class activityConfermaOrdine : AppCompatActivity() {
             // Naviga a ActivitySchermata2 per fare un altro ordine
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-            finish() // Chiude l'activity corrente (Activity4_1)
+            finish()
         }
     }
 }
