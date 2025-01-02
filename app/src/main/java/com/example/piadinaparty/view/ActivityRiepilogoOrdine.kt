@@ -7,18 +7,27 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.piadinaparty.MainActivity
 import com.example.piadinaparty.R
+import com.example.piadinaparty.controller.OrdineController
+import com.example.piadinaparty.model.Item
+import com.example.piadinaparty.model.Ordine
+import com.google.firebase.auth.FirebaseAuth
+import android.widget.Toast
 
 class ActivityRiepilogoOrdine : AppCompatActivity() {
+    private lateinit var orderController: OrdineController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_riepilogoordine)
+
+        orderController = OrdineController()
 
         // Recupera i dati dall'intent
         val indirizzo = intent.getStringExtra("indirizzo")
         val orario = intent.getStringExtra("orario")
         val pagamento = intent.getStringExtra("pagamento")
         val totalOrder = intent.getDoubleExtra("totalOrder", 0.0)
+        val selectedItems = intent.getParcelableArrayListExtra<Item>("selectedItems")
 
         // Trova i TextView nel layout
         val indirizzoTextView = findViewById<TextView>(R.id.textView2)
@@ -47,8 +56,19 @@ class ActivityRiepilogoOrdine : AppCompatActivity() {
 
         // Gestisci il click del bottone "Conferma"
         confermaButton.setOnClickListener {
-            val intent = Intent(this, ActivityConfermaOrdine::class.java)
-            startActivity(intent)
+            val userId = getCurrentUserId()
+            val order = Ordine(userId = userId, items = selectedItems ?: emptyList(), frequency = 1)
+            orderController.addOrder(order) { success ->
+                if (success) {
+                    Toast.makeText(this, "Ordine confermato con successo", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(this, "Errore nella conferma dell'ordine", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         // Gestisci il click del bottone "Indietro"
@@ -59,5 +79,11 @@ class ActivityRiepilogoOrdine : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    private fun getCurrentUserId(): String {
+        // Ottieni l'ID utente corrente da Firebase Authentication
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        return currentUser?.uid ?: ""
     }
 }
