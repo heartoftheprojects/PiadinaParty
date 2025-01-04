@@ -4,23 +4,29 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.piadinaparty.MainActivity
 import com.example.piadinaparty.R
 import com.example.piadinaparty.controller.OrdineController
+import com.example.piadinaparty.controller.UtenteController
 import com.example.piadinaparty.model.Item
 import com.example.piadinaparty.model.Ordine
 import com.google.firebase.auth.FirebaseAuth
-import android.widget.Toast
 
 class ActivityRiepilogoOrdine : AppCompatActivity() {
     private lateinit var orderController: OrdineController
+    private lateinit var userController: UtenteController
+    private var offerPoints: Int = 0
+    private var userId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_riepilogoordine)
 
         orderController = OrdineController()
+        userController = UtenteController(this)
+        userId = FirebaseAuth.getInstance().currentUser?.uid
 
         // Recupera i dati dall'intent
         val indirizzo = intent.getStringExtra("indirizzo")
@@ -28,6 +34,7 @@ class ActivityRiepilogoOrdine : AppCompatActivity() {
         val pagamento = intent.getStringExtra("pagamento")
         val totalOrder = intent.getDoubleExtra("totalOrder", 0.0)
         val selectedItems = intent.getParcelableArrayListExtra<Item>("selectedItems")
+        offerPoints = intent.getIntExtra("offerPoints", 0)
 
         // Trova i TextView nel layout
         val indirizzoTextView = findViewById<TextView>(R.id.textView2)
@@ -48,20 +55,39 @@ class ActivityRiepilogoOrdine : AppCompatActivity() {
 
         // Gestisci il click del bottone "Annulla Ordine"
         annullaButton.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            finish()
+            // Rollback dei punti dell'offerta se l'ordine viene annullato
+            if (offerPoints > 0 && userId != null) {
+                userController.getUserPoints(userId!!) { points ->
+                    if (points != null) {
+                        val newPoints = points + offerPoints
+                        userController.updateUserPoints(userId!!, newPoints) { success ->
+                            if (success) {
+                                val intent = Intent(this, MainActivity::class.java)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                Toast.makeText(this, "Errore nel rollback dei punti", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+            } else {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                finish()
+            }
         }
 
         // Gestisci il click del bottone "Conferma"
         confermaButton.setOnClickListener {
             val userId = getCurrentUserId()
-            val order = Ordine(userId = userId, items = selectedItems ?: emptyList(), frequency = 1)
+            val order = Ordine(userId = userId, items = selectedItems ?: emptyList(), frequency = 1, prezzo = totalOrder)
             orderController.addOrder(order) { success ->
                 if (success) {
                     Toast.makeText(this, "Ordine confermato con successo", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, ActivityConfermaOrdine::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                     finish()
@@ -75,6 +101,7 @@ class ActivityRiepilogoOrdine : AppCompatActivity() {
         indietroButton.setOnClickListener {
             val intent = Intent(this, ActivityInserimentoDatiOrdine::class.java).apply {
                 putExtra("totalOrder", totalOrder)
+                putExtra("offerPoints", offerPoints)
             }
             startActivity(intent)
             finish()

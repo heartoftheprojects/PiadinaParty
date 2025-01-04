@@ -2,6 +2,7 @@ plugins {
     id("com.google.gms.google-services")
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+
 }
 
 android {
@@ -55,6 +56,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+
+    implementation ("com.google.code.gson:gson:2.10.1")
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")

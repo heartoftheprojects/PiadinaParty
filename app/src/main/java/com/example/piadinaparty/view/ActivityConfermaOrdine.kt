@@ -10,7 +10,6 @@ import com.example.piadinaparty.MainActivity
 import com.example.piadinaparty.R
 
 class ActivityConfermaOrdine : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_confermaordine)

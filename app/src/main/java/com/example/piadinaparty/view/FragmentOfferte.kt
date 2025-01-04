@@ -10,8 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.piadinaparty.model.Offerta
-import com.example.piadinaparty.OfferteAdapter
+import com.example.piadinaparty.view.adapter.OfferteAdapter
 import com.example.piadinaparty.R
+import com.example.piadinaparty.controller.UtenteController
+import com.google.firebase.auth.FirebaseAuth
 
 class FragmentOfferte : Fragment() {
 
@@ -48,14 +50,33 @@ class FragmentOfferte : Fragment() {
         view.findViewById<Button>(R.id.utilizzaOfferta).setOnClickListener {
             val selectedOffer = offersAdapter.getSelectedOffer()
             if (selectedOffer != null) {
-                val fragmentHome = FragmentHome().apply {
-                    arguments = Bundle().apply {
-                        putDouble("offerPrice", selectedOffer.price)
+                val userId = FirebaseAuth.getInstance().currentUser?.uid
+                if (userId != null) {
+                    val userController = UtenteController(requireContext())
+                    userController.getUserPoints(userId) { points ->
+                        if (points != null && points >= selectedOffer.pointsRequired) {
+                            // Aggiorna i punti dell'utente
+                            val newPoints = points - selectedOffer.pointsRequired
+                            userController.updateUserPoints(userId, newPoints) { success ->
+                                if (success) {
+                                    val fragmentHome = FragmentHome().apply {
+                                        arguments = Bundle().apply {
+                                            putDouble("offerPrice", selectedOffer.price)
+                                            putInt("offerPoints", selectedOffer.pointsRequired)
+                                        }
+                                    }
+                                    parentFragmentManager.beginTransaction()
+                                        .replace(R.id.frame_container, fragmentHome)
+                                        .commit()
+                                } else {
+                                    Toast.makeText(activity, "Errore nell'aggiornamento dei punti", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        } else {
+                            Toast.makeText(activity, "Punti insufficienti per sbloccare l'offerta", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.frame_container, fragmentHome)
-                    .commit()
             } else {
                 Toast.makeText(activity, "Seleziona un'offerta per procedere", Toast.LENGTH_SHORT).show()
             }
@@ -69,8 +90,8 @@ class FragmentOfferte : Fragment() {
 
     private fun populateOffersList() {
         // Aggiungi le offerte alla lista
-        offersList.add(Offerta("1", "Niente + Coca Cola", 5.0, 100))
-        offersList.add(Offerta("2", "Crudo + acqua", 4.5, 50))
+        offersList.add(Offerta("1", "Niente + Coca Cola", 5.0, 8))
+        offersList.add(Offerta("2", "Crudo + acqua", 4.5, 4))
         offersAdapter.notifyDataSetChanged()
     }
 }

@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.piadinaparty.R
 import com.example.piadinaparty.controller.UtenteController
 import com.example.piadinaparty.databinding.FragmentUtentiBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class FragmentUtenti : Fragment() {
 
@@ -21,6 +23,7 @@ class FragmentUtenti : Fragment() {
         userController = UtenteController(requireContext())
 
         fetchUserData()
+        setupBackButton()
 
         return binding.root
     }
@@ -38,6 +41,13 @@ class FragmentUtenti : Fragment() {
                 binding.textView9.text = "Email: N/A"
                 binding.textViewPoints.text = "Punti: N/A"
             }
+        }
+    }
+
+    private fun setupBackButton() {
+        binding.buttonBack.setOnClickListener {
+            val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
+            bottomNavigationView?.selectedItemId = R.id.bottom_home
         }
     }
 }

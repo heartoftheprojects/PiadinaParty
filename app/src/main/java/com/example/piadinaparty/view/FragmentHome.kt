@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.piadinaparty.model.Item
-import com.example.piadinaparty.ItemAdapter
+import com.example.piadinaparty.view.adapter.ItemAdapter
 import com.example.piadinaparty.R
 
 class FragmentHome : Fragment() {
@@ -51,10 +51,12 @@ class FragmentHome : Fragment() {
         // Imposta il listener per il pulsante di conferma
         view.findViewById<Button>(R.id.ConfermaBottom).setOnClickListener {
             val offerPrice = arguments?.getDouble("offerPrice", 0.0) ?: 0.0
+            val offerPoints = arguments?.getInt("offerPoints", 0) ?: 0
             val total = calculateTotalOrder(offerPrice)
             if (total > 0) {
                 val intent = Intent(activity, ActivityInserimentoDatiOrdine::class.java).apply {
                     putExtra("totalOrder", total)
+                    putExtra("offerPoints", offerPoints)
                 }
                 startActivity(intent)
             } else {
@@ -75,19 +77,19 @@ class FragmentHome : Fragment() {
     }
 
     private fun updateOrder() {
-        val total = calculateTotalOrder()
+        val offerPrice = arguments?.getDouble("offerPrice", 0.0) ?: 0.0
+        val total = calculateTotalOrder(offerPrice)
         totalOrderTextView.text = "Totale: €%.2f".format(total)
     }
 
     private fun calculateTotalOrder(offerPrice: Double = 0.0): Double {
-        var total = 0.0
+        var total = offerPrice
         for (item in piadineList) {
             total += item.price * item.quantity
         }
         for (item in bevandeList) {
             total += item.price * item.quantity
         }
-        total += offerPrice
         return total
     }
 }

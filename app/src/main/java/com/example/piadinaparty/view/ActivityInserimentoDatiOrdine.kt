@@ -10,21 +10,26 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.piadinaparty.MainActivity
 import com.example.piadinaparty.R
+import com.example.piadinaparty.controller.UtenteController
+import com.google.firebase.auth.FirebaseAuth
 import java.util.Calendar
 
 class ActivityInserimentoDatiOrdine : AppCompatActivity() {
+
+    private lateinit var userController: UtenteController
+    private var offerPoints: Int = 0
+    private var userId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inserimentodatiordine)
 
+        userController = UtenteController(this)
+        userId = FirebaseAuth.getInstance().currentUser?.uid
+
         // Trova i TextView e gli EditText nel layout
-        val informazioniTextView = findViewById<TextView>(R.id.Informazioni)
-        val indirizzoTextView = findViewById<TextView>(R.id.Indirizzo)
         val indirizzoEditText = findViewById<AutoCompleteTextView>(R.id.indirizzo)
-        val orarioTextView = findViewById<TextView>(R.id.Orario)
         val orarioButton = findViewById<Button>(R.id.orarioButton)
-        val pagamentoTextView = findViewById<TextView>(R.id.Pagamento)
         val pagamentoSpinner = findViewById<Spinner>(R.id.paymentMethodSpinner)
         val creditCardLayout = findViewById<LinearLayout>(R.id.creditCardLayout)
 
@@ -139,6 +144,9 @@ class ActivityInserimentoDatiOrdine : AppCompatActivity() {
             }
         })
 
+        // Recupera i punti dell'offerta dall'intent
+        offerPoints = intent.getIntExtra("offerPoints", 0)
+
         // Gestisci il click del bottone "Conferma"
         confermaButton.setOnClickListener {
             // Ottieni i valori dai campi EditText e Spinner
@@ -189,22 +197,42 @@ class ActivityInserimentoDatiOrdine : AppCompatActivity() {
                 }
             }
 
-            // Passa i dati all'activityRiepilogoOrdine
+            // Passa i dati all'ActivityRiepilogoOrdine
             val intent = Intent(this, ActivityRiepilogoOrdine::class.java).apply {
                 putExtra("indirizzo", indirizzo)
                 putExtra("orario", orario)
                 putExtra("pagamento", pagamento)
                 putExtra("totalOrder", totalOrder)
+                putExtra("offerPoints", offerPoints)
             }
             startActivity(intent)
         }
 
         // Gestisci il click del bottone "Indietro"
         indietroButton.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK) //Si usa il flag FLAG_ACTIVITY_CLEAR_TOP per assicurarti che tutte le activity sopra la MainActivity vengano rimosse dallo stack.
-            startActivity(intent)
-            finish()
+            // Rollback dei punti dell'offerta se si torna indietro
+            if (offerPoints > 0 && userId != null) {
+                userController.getUserPoints(userId!!) { points ->
+                    if (points != null) {
+                        val newPoints = points + offerPoints
+                        userController.updateUserPoints(userId!!, newPoints) { success ->
+                            if (success) {
+                                val intent = Intent(this, MainActivity::class.java)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                Toast.makeText(this, "Errore nel rollback dei punti", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+            } else {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                finish()
+            }
         }
     }
 }

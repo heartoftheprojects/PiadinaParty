@@ -90,4 +90,29 @@ class UtenteController(private val context: Context) {
             onUserDataFetched(null)
         }
     }
+
+    fun getUserPoints(userId: String, callback: (Int?) -> Unit) {
+        firestore.collection("users").document(userId).get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    val user = document.toObject(Utente::class.java)
+                    callback(user?.points)
+                } else {
+                    callback(null)
+                }
+            }
+            .addOnFailureListener {
+                callback(null)
+            }
+    }
+
+    fun updateUserPoints(userId: String, newPoints: Int, callback: (Boolean) -> Unit) {
+        firestore.collection("users").document(userId).update("points", newPoints)
+            .addOnSuccessListener {
+                callback(true)
+            }
+            .addOnFailureListener {
+                callback(false)
+            }
+    }
 }
