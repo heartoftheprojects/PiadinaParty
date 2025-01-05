@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.piadinaparty.model.Item
 import com.example.piadinaparty.view.adapter.ItemAdapter
 import com.example.piadinaparty.R
+import com.example.piadinaparty.model.Offerta
 
 class FragmentHome : Fragment() {
 
@@ -22,6 +23,7 @@ class FragmentHome : Fragment() {
     private val piadineList = mutableListOf<Item>()
     private val bevandeList = mutableListOf<Item>()
     private lateinit var totalOrderTextView: TextView
+    private var selectedOffer: Offerta? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,16 +47,29 @@ class FragmentHome : Fragment() {
 
         totalOrderTextView = view.findViewById(R.id.totalOrderTextView)
 
+        // Recupera l'offerta selezionata dal Bundle
+        selectedOffer = arguments?.getParcelable("selectedOffer")
+
         // Popola le liste con dati di esempio
         populateLists()
 
         // Imposta il listener per il pulsante di conferma
         view.findViewById<Button>(R.id.ConfermaBottom).setOnClickListener {
-            val offerPrice = arguments?.getDouble("offerPrice", 0.0) ?: 0.0
-            val offerPoints = arguments?.getInt("offerPoints", 0) ?: 0
+            val offerPrice = selectedOffer?.price ?: 0.0
+            val offerPoints = selectedOffer?.pointsRequired ?: 0
             val total = calculateTotalOrder(offerPrice)
             if (total > 0) {
+                val selectedItems = ArrayList<Item>()
+                selectedItems.addAll(piadineList.filter { it.quantity > 0 })
+                selectedItems.addAll(bevandeList.filter { it.quantity > 0 })
+
+                val bundle = Bundle().apply {
+                    putParcelableArrayList("selectedItems", selectedItems)
+                    putParcelable("selectedOffer", selectedOffer)
+                }
+
                 val intent = Intent(activity, ActivityInserimentoDatiOrdine::class.java).apply {
+                    putExtras(bundle)
                     putExtra("totalOrder", total)
                     putExtra("offerPoints", offerPoints)
                 }
@@ -77,7 +92,7 @@ class FragmentHome : Fragment() {
     }
 
     private fun updateOrder() {
-        val offerPrice = arguments?.getDouble("offerPrice", 0.0) ?: 0.0
+        val offerPrice = selectedOffer?.price ?: 0.0
         val total = calculateTotalOrder(offerPrice)
         totalOrderTextView.text = "Totale: €%.2f".format(total)
     }

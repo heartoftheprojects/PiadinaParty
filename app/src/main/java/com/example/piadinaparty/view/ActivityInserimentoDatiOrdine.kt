@@ -13,6 +13,8 @@ import com.example.piadinaparty.R
 import com.example.piadinaparty.controller.UtenteController
 import com.google.firebase.auth.FirebaseAuth
 import java.util.Calendar
+import com.example.piadinaparty.model.Item
+import com.example.piadinaparty.model.Offerta
 
 class ActivityInserimentoDatiOrdine : AppCompatActivity() {
 
@@ -197,6 +199,11 @@ class ActivityInserimentoDatiOrdine : AppCompatActivity() {
                 }
             }
 
+            // Recupera gli elementi selezionati dal Bundle
+            val bundle = intent.extras
+            val selectedItems: ArrayList<Item>? = bundle?.getParcelableArrayList("selectedItems")
+            val selectedOffer: Offerta? = bundle?.getParcelable("selectedOffer")
+
             // Passa i dati all'ActivityRiepilogoOrdine
             val intent = Intent(this, ActivityRiepilogoOrdine::class.java).apply {
                 putExtra("indirizzo", indirizzo)
@@ -204,6 +211,7 @@ class ActivityInserimentoDatiOrdine : AppCompatActivity() {
                 putExtra("pagamento", pagamento)
                 putExtra("totalOrder", totalOrder)
                 putExtra("offerPoints", offerPoints)
+                putExtras(bundle ?: Bundle())
             }
             startActivity(intent)
         }

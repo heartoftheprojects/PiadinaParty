@@ -13,6 +13,7 @@ import com.example.piadinaparty.controller.UtenteController
 import com.example.piadinaparty.model.Item
 import com.example.piadinaparty.model.Ordine
 import com.google.firebase.auth.FirebaseAuth
+import com.example.piadinaparty.model.Offerta
 
 class ActivityRiepilogoOrdine : AppCompatActivity() {
     private lateinit var orderController: OrdineController
@@ -33,8 +34,15 @@ class ActivityRiepilogoOrdine : AppCompatActivity() {
         val orario = intent.getStringExtra("orario")
         val pagamento = intent.getStringExtra("pagamento")
         val totalOrder = intent.getDoubleExtra("totalOrder", 0.0)
-        val selectedItems = intent.getParcelableArrayListExtra<Item>("selectedItems")
+
+        // Recupera gli elementi selezionati dal Bundle
+        val bundle = intent.extras
+        val selectedItems: ArrayList<Item>? = bundle?.getParcelableArrayList("selectedItems")
+        val selectedOffer: Offerta? = bundle?.getParcelable("selectedOffer")
         offerPoints = intent.getIntExtra("offerPoints", 0)
+
+        // Se selectedItems è null, impostalo come lista vuota
+        val items = selectedItems ?: ArrayList()
 
         // Trova i TextView nel layout
         val indirizzoTextView = findViewById<TextView>(R.id.textView2)
@@ -55,7 +63,6 @@ class ActivityRiepilogoOrdine : AppCompatActivity() {
 
         // Gestisci il click del bottone "Annulla Ordine"
         annullaButton.setOnClickListener {
-            // Rollback dei punti dell'offerta se l'ordine viene annullato
             if (offerPoints > 0 && userId != null) {
                 userController.getUserPoints(userId!!) { points ->
                     if (points != null) {
@@ -83,7 +90,7 @@ class ActivityRiepilogoOrdine : AppCompatActivity() {
         // Gestisci il click del bottone "Conferma"
         confermaButton.setOnClickListener {
             val userId = getCurrentUserId()
-            val order = Ordine(userId = userId, items = selectedItems ?: emptyList(), frequency = 1, prezzo = totalOrder)
+            val order = Ordine(userId = userId, items = items, frequency = 1, prezzo = totalOrder, offerta = selectedOffer)
             orderController.addOrder(order) { success ->
                 if (success) {
                     Toast.makeText(this, "Ordine confermato con successo", Toast.LENGTH_SHORT).show()
@@ -109,7 +116,6 @@ class ActivityRiepilogoOrdine : AppCompatActivity() {
     }
 
     private fun getCurrentUserId(): String {
-        // Ottieni l'ID utente corrente da Firebase Authentication
         val currentUser = FirebaseAuth.getInstance().currentUser
         return currentUser?.uid ?: ""
     }

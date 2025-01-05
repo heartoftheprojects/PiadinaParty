@@ -1,10 +1,11 @@
 package com.example.piadinaparty.view
 
-import androidx.fragment.app.Fragment
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.piadinaparty.R
@@ -43,6 +44,13 @@ class FragmentOrdiniFrequenti : Fragment() {
 
     private fun loadFrequentOrders(userId: String) {
         orderController.getFrequentOrders(userId) { orders ->
+            if (orders.isNotEmpty()) {
+                orders.forEach { order ->
+                    Log.d("FragmentOrdiniFrequenti", "Order: ${order.id}, Items: ${order.items.joinToString { it.name }}")
+                }
+            } else {
+                Log.d("FragmentOrdiniFrequenti", "No orders found")
+            }
             orderAdapter.submitList(orders)
         }
     }

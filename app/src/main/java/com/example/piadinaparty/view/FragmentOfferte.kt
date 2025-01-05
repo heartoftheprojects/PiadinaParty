@@ -61,8 +61,7 @@ class FragmentOfferte : Fragment() {
                                 if (success) {
                                     val fragmentHome = FragmentHome().apply {
                                         arguments = Bundle().apply {
-                                            putDouble("offerPrice", selectedOffer.price)
-                                            putInt("offerPoints", selectedOffer.pointsRequired)
+                                            putParcelable("selectedOffer", selectedOffer)
                                         }
                                     }
                                     parentFragmentManager.beginTransaction()

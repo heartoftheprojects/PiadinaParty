@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.piadinaparty.R
 import com.example.piadinaparty.model.Ordine
 
 class OrdineAdapter : ListAdapter<Ordine, OrdineAdapter.OrdineViewHolder>(OrdineDiffCallback()) {
@@ -25,10 +26,12 @@ class OrdineAdapter : ListAdapter<Ordine, OrdineAdapter.OrdineViewHolder>(Ordine
     class OrdineViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val itemsTextView: TextView = itemView.findViewById(R.id.itemsTextView)
         private val frequencyTextView: TextView = itemView.findViewById(R.id.frequencyTextView)
+        private val priceTextView: TextView = itemView.findViewById(R.id.priceTextView)
 
         fun bind(order: Ordine) {
             itemsTextView.text = order.items.joinToString { it.name }
             frequencyTextView.text = order.frequency.toString()
+            priceTextView.text = "Prezzo: €${order.prezzo}"
         }
     }
 
