@@ -4,10 +4,10 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Item(
-    val name: String,
-    val price: Double,
+    val name: String = "",
+    val price: Double = 0.0,
     var quantity: Int = 0,
-    val description: String
+    val description: String = ""
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",

@@ -1,6 +1,7 @@
 package com.example.piadinaparty
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.piadinaparty.view.FragmentHome
@@ -21,18 +22,22 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when(menuItem.itemId) {
                 R.id.bottom_home -> {
+                    Log.d("MainActivity", "Navigazione a HomeFragment")
                     replaceFragment(FragmentHome())
                     true
                 }
                 R.id.bottom_utente -> {
+                    Log.d("MainActivity", "Navigazione a FragmentUtenti")
                     replaceFragment(FragmentUtenti())
                     true
                 }
                 R.id.bottom_offerte -> {
+                    Log.d("MainActivity", "Navigazione a FragmentOfferte")
                     replaceFragment(FragmentOfferte())
                     true
                 }
                 R.id.bottom_ordinifrequenti -> {
+                    Log.d("MainActivity", "Navigazione a FragmentOrdiniFrequenti")
                     replaceFragment(FragmentOrdiniFrequenti())
                     true
                 }

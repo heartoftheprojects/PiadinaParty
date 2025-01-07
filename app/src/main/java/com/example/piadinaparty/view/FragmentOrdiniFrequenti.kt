@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.piadinaparty.R
 import com.example.piadinaparty.controller.OrdineController
-import com.example.piadinaparty.model.Ordine
 import com.example.piadinaparty.OrdineAdapter
 import com.google.firebase.auth.FirebaseAuth
 
@@ -37,8 +36,8 @@ class FragmentOrdiniFrequenti : Fragment() {
     }
 
     private fun getCurrentUserId(): String {
-        // Ottieni l'ID utente corrente da Firebase Authentication
         val currentUser = FirebaseAuth.getInstance().currentUser
+        Log.d("FragmentOrdiniFrequenti", "Current User ID: ${currentUser?.uid}")
         return currentUser?.uid ?: ""
     }
 

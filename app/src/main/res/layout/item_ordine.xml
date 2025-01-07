@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,17 +9,17 @@
         android:id="@+id/itemsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Prodotti" />
+        android:text="Items"/>
 
     <TextView
         android:id="@+id/frequencyTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Frequenza" />
+        android:text="Frequency"/>
 
     <TextView
         android:id="@+id/priceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Prezzo" />
+        android:text="Price"/>
 </LinearLayout>
