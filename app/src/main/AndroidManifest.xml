@@ -17,6 +17,7 @@
         android:theme="@style/Theme.PiadinaParty"
         tools:targetApi="31">
 
+
         <activity
             android:name=".view.ActivityLogin"
             android:exported="true">

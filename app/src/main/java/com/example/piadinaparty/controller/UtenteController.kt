@@ -20,11 +20,13 @@ class UtenteController(private val context: Context) {
             firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+                        Log.d("UtenteController", "Login avvenuto correttamente!")
                         Toast.makeText(context, "Login avvenuto correttamente!", Toast.LENGTH_SHORT).show()
                         val intent = Intent(context, MainActivity::class.java)
                         intent.putExtra("FRAGMENT_TO_LOAD", "HOME_FRAGMENT")
                         context.startActivity(intent)
                     } else {
+                        Log.d("UtenteController", "Login fallito!")
                         Toast.makeText(context, "Login fallito!", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -76,6 +78,7 @@ class UtenteController(private val context: Context) {
                 .addOnSuccessListener { document ->
                     if (document != null) {
                         val user = document.toObject(Utente::class.java)
+                        Log.d("UserController", "User data fetched: $user")
                         onUserDataFetched(user)
                     } else {
                         Log.d("UserController", "No such document")
@@ -87,6 +90,7 @@ class UtenteController(private val context: Context) {
                     onUserDataFetched(null)
                 }
         } else {
+            Log.d("UserController", "No current user")
             onUserDataFetched(null)
         }
     }
@@ -96,12 +100,15 @@ class UtenteController(private val context: Context) {
             .addOnSuccessListener { document ->
                 if (document != null) {
                     val user = document.toObject(Utente::class.java)
+                    Log.d("UserController", "User points fetched: ${user?.points}")
                     callback(user?.points)
                 } else {
+                    Log.d("UserController", "No such document")
                     callback(null)
                 }
             }
-            .addOnFailureListener {
+            .addOnFailureListener { exception ->
+                Log.w("UserController", "Error getting document: ", exception)
                 callback(null)
             }
     }
@@ -109,9 +116,11 @@ class UtenteController(private val context: Context) {
     fun updateUserPoints(userId: String, newPoints: Int, callback: (Boolean) -> Unit) {
         firestore.collection("users").document(userId).update("points", newPoints)
             .addOnSuccessListener {
+                Log.d("UserController", "User points updated to $newPoints")
                 callback(true)
             }
-            .addOnFailureListener {
+            .addOnFailureListener { exception ->
+                Log.w("UserController", "Error updating points: ", exception)
                 callback(false)
             }
     }

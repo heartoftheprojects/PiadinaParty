@@ -27,11 +27,13 @@ class OrdineAdapter : ListAdapter<Ordine, OrdineAdapter.OrdineViewHolder>(Ordine
         private val itemsTextView: TextView = itemView.findViewById(R.id.itemsTextView)
         private val frequencyTextView: TextView = itemView.findViewById(R.id.frequencyTextView)
         private val priceTextView: TextView = itemView.findViewById(R.id.priceTextView)
+        private val offertaTextView: TextView = itemView.findViewById(R.id.offertaTextView)
 
         fun bind(order: Ordine) {
             itemsTextView.text = order.items.joinToString { it.name }
             frequencyTextView.text = order.frequency.toString()
             priceTextView.text = "Prezzo: €${order.prezzo}"
+            offertaTextView.text = order.offerta?.description ?: "Nessuna offerta"
         }
     }
 

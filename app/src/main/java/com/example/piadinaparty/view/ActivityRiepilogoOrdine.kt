@@ -2,6 +2,7 @@ package com.example.piadinaparty.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -94,6 +95,7 @@ class ActivityRiepilogoOrdine : AppCompatActivity() {
             orderController.addOrder(order) { success ->
                 if (success) {
                     Toast.makeText(this, "Ordine confermato con successo", Toast.LENGTH_SHORT).show()
+                    Log.d("ActivityRiepilogoOrdine", "Order saved: $order")
                     val intent = Intent(this, ActivityConfermaOrdine::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)

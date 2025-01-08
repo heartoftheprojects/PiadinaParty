@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -213,12 +214,12 @@ class ActivityInserimentoDatiOrdine : AppCompatActivity() {
                 putExtra("offerPoints", offerPoints)
                 putExtras(bundle ?: Bundle())
             }
+            Log.d("ActivityInserimentoDatiOrdine", "Order details: Indirizzo: $indirizzo, Orario: $orario, Pagamento: $pagamento, TotalOrder: $totalOrder, SelectedItems: $selectedItems")
             startActivity(intent)
         }
 
         // Gestisci il click del bottone "Indietro"
         indietroButton.setOnClickListener {
-            // Rollback dei punti dell'offerta se si torna indietro
             if (offerPoints > 0 && userId != null) {
                 userController.getUserPoints(userId!!) { points ->
                     if (points != null) {

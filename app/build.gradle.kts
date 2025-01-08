@@ -64,4 +64,5 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
     implementation("com.google.firebase:firebase-auth")
     implementation ("com.google.firebase:firebase-firestore")
+    implementation ("com.firebaseui:firebase-ui-firestore:8.0.0")
 }

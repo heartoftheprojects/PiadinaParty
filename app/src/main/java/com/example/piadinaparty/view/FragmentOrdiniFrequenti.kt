@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,12 +26,19 @@ class FragmentOrdiniFrequenti : Fragment() {
         orderController = OrdineController()
         orderAdapter = OrdineAdapter()
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewOrdiniFrequenti)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = orderAdapter
 
         val userId: String = getCurrentUserId()
         loadFrequentOrders(userId)
+
+        view.findViewById<Button>(R.id.Indietro).setOnClickListener {
+            // Torna al fragmentHome
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frame_container, FragmentHome())
+                .commit()
+        }
 
         return view
     }

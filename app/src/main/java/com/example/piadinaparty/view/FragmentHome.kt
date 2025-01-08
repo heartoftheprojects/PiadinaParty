@@ -2,6 +2,7 @@ package com.example.piadinaparty.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -73,6 +74,7 @@ class FragmentHome : Fragment() {
                     putExtra("totalOrder", total)
                     putExtra("offerPoints", offerPoints)
                 }
+                Log.d("FragmentHome", "Selected items: $selectedItems, Total: $total")
                 startActivity(intent)
             } else {
                 Toast.makeText(activity, "Seleziona almeno una piadina o una bevanda per procedere", Toast.LENGTH_SHORT).show()
