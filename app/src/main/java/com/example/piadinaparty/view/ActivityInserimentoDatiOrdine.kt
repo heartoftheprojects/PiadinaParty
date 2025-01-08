@@ -54,12 +54,17 @@ class ActivityInserimentoDatiOrdine : AppCompatActivity() {
         // Gestisci il click del bottone "Seleziona l'orario"
         orarioButton.setOnClickListener {
             val calendar = Calendar.getInstance()
+            calendar.add(Calendar.MINUTE, 30) // Aggiungi 30 minuti all'orario corrente
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
             val minute = calendar.get(Calendar.MINUTE)
 
             val timePickerDialog = TimePickerDialog(this, { _, selectedHour, selectedMinute ->
-                val formattedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
-                orarioButton.text = formattedTime
+                if (selectedHour in 19..23) {
+                    val formattedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
+                    orarioButton.text = formattedTime
+                } else {
+                    Toast.makeText(this, "L'orario di consegna deve essere tra le 19:00 e le 23:00", Toast.LENGTH_SHORT).show()
+                }
             }, hour, minute, true)
 
             timePickerDialog.show()
@@ -165,6 +170,18 @@ class ActivityInserimentoDatiOrdine : AppCompatActivity() {
             }
             if (orario == "Seleziona l'orario") {
                 Toast.makeText(this, "Seleziona l'orario di consegna", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // Validazione dell'orario di consegna
+            val currentTime = Calendar.getInstance()
+            val selectedTime = Calendar.getInstance().apply {
+                val parts = orario.split(":")
+                set(Calendar.HOUR_OF_DAY, parts[0].toInt())
+                set(Calendar.MINUTE, parts[1].toInt())
+            }
+            if (selectedTime.before(currentTime.apply { add(Calendar.MINUTE, 30) }) || selectedTime.get(Calendar.HOUR_OF_DAY) !in 19..23) {
+                Toast.makeText(this, "L'orario di consegna deve essere tra le 19:00 e le 23:00 e almeno 30 minuti dopo l'orario corrente", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 

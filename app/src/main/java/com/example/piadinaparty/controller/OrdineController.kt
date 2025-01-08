@@ -129,12 +129,30 @@ class OrdineController {
                             callback(false)
                         }
                 } else {
-                    // Ordine esiste, incrementa la frequenza
+                    // Ordine esiste, incrementa la frequenza e aggiorna i punti
                     val newFrequency = (existingOrder["frequency"] as Long).toInt() + 1
                     ordersRef.document(existingOrder.id)
                         .update("frequency", newFrequency)
                         .addOnSuccessListener {
-                            callback(true)
+                            // Calcola i punti
+                            val punti = calcolaPunti(order.prezzo)
+                            // Aggiorna i punti dell'utente
+                            val userRef = db.collection("users").document(order.userId)
+                            userRef.get().addOnSuccessListener { document ->
+                                if (document != null) {
+                                    val user = document.toObject(Utente::class.java)
+                                    if (user != null) {
+                                        val nuoviPunti = user.points + punti
+                                        userRef.update("points", nuoviPunti)
+                                            .addOnSuccessListener {
+                                                callback(true)
+                                            }
+                                            .addOnFailureListener {
+                                                callback(false)
+                                            }
+                                    }
+                                }
+                            }
                         }
                         .addOnFailureListener {
                             callback(false)

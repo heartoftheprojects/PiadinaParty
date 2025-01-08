@@ -21,6 +21,7 @@
         android:id="@+id/recyclerViewOrdiniFrequenti"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:scrollbars="vertical"
         app:layout_constraintTop_toBottomOf="@+id/textView7"
         app:layout_constraintBottom_toTopOf="@+id/Indietro"
         app:layout_constraintStart_toStartOf="parent"
