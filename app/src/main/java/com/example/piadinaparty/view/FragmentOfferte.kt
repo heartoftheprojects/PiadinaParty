@@ -94,11 +94,3 @@ class FragmentOfferte : Fragment() {
         offersAdapter.notifyDataSetChanged()
     }
 }
-
-
-//cose da fare in questo fragment:
-//gli elementi della lista di offerte devo renderli selezionabili
-//ed inserire un button conferma che cliccandolo dopo aver selezionato un offerta, venga effettuato il controllo che l'utente abbia abbastanza punti per sbloccare l'offerta e in caso positivo mi reindirizzo alla pagina di inserimento dati ordine
-
-//cose da fare in generale:
-//capire bene come sviluppare il meccanismo di punti accumulati dall'utente
