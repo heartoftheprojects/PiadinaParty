@@ -95,6 +95,10 @@ class UtenteController(private val context: Context) {
         }
     }
 
+    fun logoutUser() {   //funzione del logout
+        firebaseAuth.signOut()
+    }
+
     fun getUserPoints(userId: String, callback: (Int?) -> Unit) {
         firestore.collection("users").document(userId).get()
             .addOnSuccessListener { document ->

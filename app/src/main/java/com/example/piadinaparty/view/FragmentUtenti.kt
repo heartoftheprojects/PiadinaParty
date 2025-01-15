@@ -9,6 +9,8 @@ import com.example.piadinaparty.R
 import com.example.piadinaparty.controller.UtenteController
 import com.example.piadinaparty.databinding.FragmentUtentiBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.app.AlertDialog
+import android.content.Intent
 
 class FragmentUtenti : Fragment() {
 
@@ -24,8 +26,25 @@ class FragmentUtenti : Fragment() {
 
         fetchUserData()
         setupBackButton()
+        setupLogoutButton()
 
         return binding.root
+    }
+
+    private fun setupLogoutButton() {   //funzionamento del button per il logout
+        binding.buttonLogout.setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setTitle("Logout")
+                .setMessage("Sicuro di voler uscire dall'applicazione?")
+                .setPositiveButton("Si") { _, _ ->
+                    userController.logoutUser()
+                    val intent = Intent(requireContext(), ActivityLogin::class.java)
+                    startActivity(intent)
+                    activity?.finish()
+                }
+                .setNegativeButton("No", null)
+                .show()
+        }
     }
 
     private fun fetchUserData() {
