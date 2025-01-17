@@ -15,10 +15,10 @@ class UtenteUnitTest {
 
         // Creiamo un nuovo utente
         val newUser = Utente(
-            id = "marcello19800101",
-            firstName = "Marcello",
-            lastName = "Ciampoli",
-            email = "marcello.ciampoli@example.com",
+            id = "Daniele1239293",
+            firstName = "Daniele",
+            lastName = "Quinzio",
+            email = "dani.quinzio@example.com",
             points = 0
         )
 
@@ -32,10 +32,10 @@ class UtenteUnitTest {
 
         // Verifichiamo che l'utente inserito sia corretto
         val insertedUser = userList[0]
-        assertEquals("marcello19800101", insertedUser.id)
-        assertEquals("Marcello", insertedUser.firstName)
-        assertEquals("Ciampoli", insertedUser.lastName)
-        assertEquals("marcello.ciampoli@example.com", insertedUser.email)
+        assertEquals("Daniele1239293", insertedUser.id)
+        assertEquals("Daniele", insertedUser.firstName)
+        assertEquals("Quinzio", insertedUser.lastName)
+        assertEquals("dani.quinzio@example.com", insertedUser.email)
         assertEquals(0, insertedUser.points)
     }
 

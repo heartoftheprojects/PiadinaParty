@@ -15,8 +15,9 @@ class UtenteController(private val context: Context) {
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
+    //funzione per effettuare controlli sul login
     fun loginUser(email: String, password: String) {
-        if (email.isNotEmpty() && password.isNotEmpty()) {
+        if (email.isNotEmpty() && password.isNotEmpty()) { //controllo se i campi non sono vuoti
             firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -35,22 +36,23 @@ class UtenteController(private val context: Context) {
         }
     }
 
+    //funzione per effetturare controlli sulla registrazione
     fun registerUser(firstName: String, lastName: String, email: String, password: String) {
         if (email.isNotEmpty() && password.isNotEmpty() && firstName.isNotEmpty() && lastName.isNotEmpty()) {
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val user = firebaseAuth.currentUser
-                        if (user != null) {
-                            val userId = user.uid
-                            val newUser = Utente(
+                        if (user != null) { //controllo se l'utente esiste già con le credenziali inserite
+                            val userId = user.uid //assegnazione id generato da firebase all'utente nuovo
+                            val newUser = Utente( //creazione oggetto della classe utente con i valori dei campi inseriti
                                 id = userId,
                                 firstName = firstName,
                                 lastName = lastName,
                                 email = email
                             )
 
-                            firestore.collection("users").document(userId).set(newUser)
+                            firestore.collection("users").document(userId).set(newUser) //inserimento del nuovo oggetto utente nella raccolta users
                                 .addOnSuccessListener {
                                     Toast.makeText(context, "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show()
                                     val intent = Intent(context, ActivityLogin::class.java)
@@ -62,11 +64,11 @@ class UtenteController(private val context: Context) {
                                 }
                         }
                     } else {
-                        Toast.makeText(context, "Registrazione non avvenuta con successo", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Registrazione non avvenuta con successo", Toast.LENGTH_SHORT).show() //se le credenziali dell'utente esistono già
                     }
                 }
         } else {
-            Toast.makeText(context, "Compila tutti i campi", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Compila tutti i campi", Toast.LENGTH_SHORT).show() //se non tutti i campi sono riempiti
         }
     }
 

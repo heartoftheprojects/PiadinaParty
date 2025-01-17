@@ -32,6 +32,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         bottomNavigationView = findViewById(R.id.bottom_navigation)
+
+        //nel bottomNavigationMenu a seconda del tasto cliccato viene aperto il rispettivo fragment
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when(menuItem.itemId) {
                 R.id.bottom_home -> {
@@ -58,16 +60,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //viene controllato che il fragment predefinito sia quello relativo alla home
         val fragmentToLoad = intent.getStringExtra("FRAGMENT_TO_LOAD")
-        if (fragmentToLoad == "HOME_FRAGMENT") {
+        if (fragmentToLoad == "HOME_FRAGMENT") {  //controllo che fragmentToLoad si riferisca ad un fragment in particolare (in questo caso Home)
             bottomNavigationView.selectedItemId = R.id.bottom_home
         } else {
-            // Carica il HomeFragment come predefinito
+            // se fragmentToLoad non ha una richiesta specifica allora carica il HomeFragment come predefinito
             replaceFragment(FragmentHome())
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(fragment: Fragment) { //serve per caricare il fragment relativo all'item selezionato nel menu col clic sul bottom
         supportFragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit()
     }
 }

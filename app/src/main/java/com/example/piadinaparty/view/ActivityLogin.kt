@@ -11,6 +11,7 @@ class ActivityLogin : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var userController: UtenteController
 
+    //Configurazione activity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -18,10 +19,12 @@ class ActivityLogin : AppCompatActivity() {
 
         userController = UtenteController(this)
 
+        //caricamento di email e password inseriti
         binding.loginButton.setOnClickListener {
             val email = binding.LoginEmail.text.toString()
             val password = binding.LoginPassword.text.toString()
 
+            //email e password inseriti passati come parametri alla funzione loginUser del controller utente
             userController.loginUser(email, password)
         }
 

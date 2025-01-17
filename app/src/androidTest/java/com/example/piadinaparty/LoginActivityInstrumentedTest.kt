@@ -48,7 +48,7 @@ class LoginActivityInstrumentedTest {
         Thread.sleep(4000)
 
         // Se viene aperta la MainActivity, quindi l'utente è loggato, il test è andato a buon fine altrimenti è fallito
-        Espresso.onView(withId(R.id.frame_container)) // Assicurati che questo ID esista nel layout della tua MainActivity
+        Espresso.onView(withId(R.id.frame_container))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
 
@@ -67,7 +67,7 @@ class LoginActivityInstrumentedTest {
         Thread.sleep(5000)
 
         // Se viene aperta la MainActivity, quindi l'utente è loggato, il test è andato a buon fine altrimenti è fallito
-        Espresso.onView(withId(R.id.frame_container)) // Assicurati che questo ID esista nel layout della tua MainActivity
+        Espresso.onView(withId(R.id.frame_container))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
 }
