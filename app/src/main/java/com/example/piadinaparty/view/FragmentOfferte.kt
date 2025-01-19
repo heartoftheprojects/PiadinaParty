@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class FragmentOfferte : Fragment() {
 
-    private lateinit var offersAdapter: OfferteAdapter
+    private lateinit var offersAdapter: OfferteAdapter //adapter per visualizzare la recyclerview di offerte
     private val offersList = mutableListOf<Offerta>()
 
     override fun onCreateView(
@@ -32,7 +32,7 @@ class FragmentOfferte : Fragment() {
             Toast.makeText(activity, "Offerta selezionata: ${offer.description}", Toast.LENGTH_SHORT).show()
         }
 
-        // Imposta il LayoutManager e l'adapter per la RecyclerView
+        // Nella RecyclerView identificata da R.id.recyclerOffers si imposta il LayoutManager e l'adapter per la RecyclerView
         view.findViewById<RecyclerView>(R.id.recyclerOffers).apply {
             layoutManager = LinearLayoutManager(context)
             adapter = offersAdapter
@@ -59,12 +59,12 @@ class FragmentOfferte : Fragment() {
                             val newPoints = points - selectedOffer.pointsRequired
                             userController.updateUserPoints(userId, newPoints) { success ->
                                 if (success) {
-                                    val fragmentHome = FragmentHome().apply {
+                                    val fragmentHome = FragmentHome().apply { //viene passata l'offerta selezionata al fragment home
                                         arguments = Bundle().apply {
                                             putParcelable("selectedOffer", selectedOffer)
                                         }
                                     }
-                                    parentFragmentManager.beginTransaction()
+                                    parentFragmentManager.beginTransaction() //ritorno al fragmentHome
                                         .replace(R.id.frame_container, fragmentHome)
                                         .commit()
                                 } else {

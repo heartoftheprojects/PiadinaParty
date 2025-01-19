@@ -23,6 +23,7 @@ class FragmentOrdiniFrequenti : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_ordinifrequenti, container, false)
+
         orderController = OrdineController()
         orderAdapter = OrdineAdapter()
 
@@ -49,6 +50,7 @@ class FragmentOrdiniFrequenti : Fragment() {
         return currentUser?.uid ?: ""
     }
 
+    //funzione per caricare nella recyclerview gli ordini effettuati da un utente e recuperati dal database mediante funzione getFrequentOrders
     private fun loadFrequentOrders(userId: String) {
         orderController.getFrequentOrders(userId) { orders ->
             if (orders.isNotEmpty()) {
@@ -58,7 +60,7 @@ class FragmentOrdiniFrequenti : Fragment() {
             } else {
                 Log.d("FragmentOrdiniFrequenti", "No orders found")
             }
-            orderAdapter.submitList(orders)
+            orderAdapter.submitList(orders) //per aggiornare l'adapter della recyclerview di ordini e visualizzare la lista di ordini passata relativa a quell'utente
         }
     }
 }

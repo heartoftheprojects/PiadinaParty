@@ -9,14 +9,15 @@ import com.example.piadinaparty.model.Utente
 class OrdineController {
     private val db = FirebaseFirestore.getInstance()
 
+    //Questa funzione ottiene gli ordini più frequenti effettuati da un utente specifico, identificato dal suo userId, da un database di Firestore
     fun getFrequentOrders(userId: String, callback: (List<Ordine>) -> Unit) {
         db.collection("orders")
             .whereEqualTo("userId", userId)
             .orderBy("frequency", com.google.firebase.firestore.Query.Direction.DESCENDING)
-            .get()
+            .get() //ottieni il resultato della query
             .addOnSuccessListener { result ->
                 val orders = result.map { document ->
-                    val items = (document["items"] as List<Map<String, Any>>).map { itemMap ->
+                    val items = (document["items"] as List<Map<String, Any>>).map { itemMap -> //estrazione dei singoli elementi ordinati con visualizzazione dei singoli campi
                         Item(
                             name = itemMap["name"] as String,
                             price = (itemMap["price"] as Double),
@@ -24,7 +25,7 @@ class OrdineController {
                             description = itemMap["description"] as String
                         )
                     }
-                    val offertaMap = document["offerta"] as? Map<String, Any>
+                    val offertaMap = document["offerta"] as? Map<String, Any> //estrazione dell'offerta presente nell'ordine
                     val offerta = offertaMap?.let {
                         Offerta(
                             id = it["id"] as String,
@@ -33,7 +34,7 @@ class OrdineController {
                             pointsRequired = (it["pointsRequired"] as Long).toInt()
                         )
                     }
-                    Ordine(
+                    Ordine( //creazione oggetto ordine
                         id = document.id,
                         userId = document["userId"] as String,
                         items = items,
@@ -42,20 +43,20 @@ class OrdineController {
                         offerta = offerta
                     )
                 }
-                callback(orders)
+                callback(orders) //se query andata buon fine, si passa la lista di ordini "orders"
             }
             .addOnFailureListener { exception ->
-                callback(emptyList())
+                callback(emptyList()) //se query non è andata buon fine, si passa la lista vuota
             }
     }
 
     fun addOrder(order: Ordine, callback: (Boolean) -> Unit) {
-        val ordersRef = db.collection("orders")
+        val ordersRef = db.collection("orders")   //query per cercarti nel database gli ordini effettuati da un certo utente
         ordersRef
             .whereEqualTo("userId", order.userId)
             .get()
             .addOnSuccessListener { result ->
-                val existingOrder = result.documents.find { document ->
+                val existingOrder = result.documents.find { document ->   //existingOrder sono i singoli ordini effettuati da un utente e recuperati da firebase
                     val items = (document["items"] as List<Map<String, Any>>).map { itemMap ->
                         Item(
                             name = itemMap["name"] as String,
@@ -73,14 +74,14 @@ class OrdineController {
                             pointsRequired = (it["pointsRequired"] as Long).toInt()
                         )
                     }
-                    items == order.items && offerta == order.offerta
+                    items == order.items && offerta == order.offerta  //confronto degli items dell'ordine presente in firebase con items del nuovo ordine e confronto l'offerta dell'ordine presente in firebase con l'offerta dell'ordine nuovo
                 }
 
+                //se non esiste nessun ordine, si aggiunge al database l'ordine passato come parametro nella funzione
                 if (existingOrder == null) {
-                    // Ordine non esiste, aggiungi nuovo ordine
-                    val orderRef = ordersRef.document()
+                    val orderRef = ordersRef.document() //nuovo documento nella collezione orders
                     val orderWithId = order.copy(id = orderRef.id, frequency = 1)
-                    val ordineMap = hashMapOf(
+                    val ordineMap = hashMapOf( //mappa (ordineMap) che rappresenta i dati del nuovo ordine, formattati correttamente
                         "id" to orderWithId.id,
                         "userId" to orderWithId.userId,
                         "items" to orderWithId.items.map { item ->
@@ -103,10 +104,10 @@ class OrdineController {
                         }
                     )
 
-                    orderRef.set(ordineMap)
+                    orderRef.set(ordineMap) //aggiungi il nuovo ordine a firebase
                         .addOnSuccessListener {
                             // Calcola i punti
-                            val punti = calcolaPunti(order.prezzo)
+                            val punti = calcolaPunti(order.prezzo) //calcolo dei punti da assegnare all'utente in base all'ordine del prezzo
                             // Aggiorna i punti dell'utente
                             val userRef = db.collection("users").document(order.userId)
                             userRef.get().addOnSuccessListener { document ->
@@ -114,7 +115,7 @@ class OrdineController {
                                     val user = document.toObject(Utente::class.java)
                                     if (user != null) {
                                         val nuoviPunti = user.points + punti
-                                        userRef.update("points", nuoviPunti)
+                                        userRef.update("points", nuoviPunti) //recuperato il documento dell'utente dalla collezione users, si aggiorna i suoi punti totali
                                             .addOnSuccessListener {
                                                 callback(true)
                                             }
@@ -129,9 +130,9 @@ class OrdineController {
                             callback(false)
                         }
                 } else {
-                    // Ordine esiste, incrementa la frequenza e aggiorna i punti
-                    val newFrequency = (existingOrder["frequency"] as Long).toInt() + 1
-                    ordersRef.document(existingOrder.id)
+                    // Se existingOrder != null, significa che l'ordine è già presente
+                    val newFrequency = (existingOrder["frequency"] as Long).toInt() + 1 //Si recupera la frequenza attuale dall'ordine e la incrementa di 1
+                    ordersRef.document(existingOrder.id) //Si aggiorna la frequenza dell'ordine già presente anche nel database
                         .update("frequency", newFrequency)
                         .addOnSuccessListener {
                             // Calcola i punti

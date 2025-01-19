@@ -72,6 +72,7 @@ class UtenteController(private val context: Context) {
         }
     }
 
+    //funzione per recuperare dal database le informazioni relative all'utente da visualizzare nel fragmentUtenti
     fun fetchUserData(onUserDataFetched: (Utente?) -> Unit) {
         val currentUser = firebaseAuth.currentUser
         if (currentUser != null) {
@@ -101,6 +102,7 @@ class UtenteController(private val context: Context) {
         firebaseAuth.signOut()
     }
 
+    //funzione per recuperare punti dell'utente dal database
     fun getUserPoints(userId: String, callback: (Int?) -> Unit) {
         firestore.collection("users").document(userId).get()
             .addOnSuccessListener { document ->
@@ -119,6 +121,7 @@ class UtenteController(private val context: Context) {
             }
     }
 
+    //funzione per aggiornare sul database i punti dell'utente in caso di offerta utilizzata
     fun updateUserPoints(userId: String, newPoints: Int, callback: (Boolean) -> Unit) {
         firestore.collection("users").document(userId).update("points", newPoints)
             .addOnSuccessListener {

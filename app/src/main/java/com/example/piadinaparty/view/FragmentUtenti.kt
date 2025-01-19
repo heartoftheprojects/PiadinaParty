@@ -47,6 +47,7 @@ class FragmentUtenti : Fragment() {
         }
     }
 
+    //funzione per visualizzare i campi dell'utente recuperati da firebase mediante la funzione fetchUserData
     private fun fetchUserData() {
         userController.fetchUserData { user ->
             if (user != null) {

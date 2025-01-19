@@ -89,16 +89,16 @@ class ActivityInserimentoDatiOrdine : AppCompatActivity() {
         }
 
         // Aggiungi un TextWatcher per formattare il numero di carta di credito
-        creditCardNumberEditText.addTextChangedListener(object : TextWatcher {
-            private var current = ""
-            private val nonDigits = Regex("[^\\d]")
+        creditCardNumberEditText.addTextChangedListener(object : TextWatcher {  //addTextChangedListener associa un TextWatcher a creditCardNumberEditText
+            private var current = "" // È quello che il codice ha già formattato e impostato sull'EditText (serve per i controlli sulla formattazione) ,
+            private val nonDigits = Regex("[^\\d]") //identifica tutti i caratteri non numerici
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {} //cattura il testo prima di qualsiasi modifica.
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {} //cattura il testo durante la modifica
 
-            override fun afterTextChanged(s: Editable?) {
-                if (s.toString() != current) {
+            override fun afterTextChanged(s: Editable?) { //cattura il testo dopo l'inserimento del numero di carta e vengono effettuati controlli relativi alla formattazione
+                if (s.toString() != current) { //controlla che quello che l'utente sta digitando "s" sia diverso dal numero già formattato e presente nell'editText
                     val userInput = s.toString().replace(nonDigits, "")
                     if (userInput.length <= 16) {
                         val formatted = StringBuilder()
@@ -108,11 +108,11 @@ class ActivityInserimentoDatiOrdine : AppCompatActivity() {
                             }
                             formatted.append(userInput[i])
                         }
-                        current = formatted.toString()
-                        creditCardNumberEditText.setText(current)
-                        creditCardNumberEditText.setSelection(current.length)
+                        current = formatted.toString()  //current prende la stringa di numeri formatatta
+                        creditCardNumberEditText.setText(current) //setti il testo dell'editText con l'ultima stringa formattata presente in current
+                        creditCardNumberEditText.setSelection(current.length) //Si posiziona il cursore alla fine del testo aggiornato
                     } else {
-                        current = current.substring(0, current.length - 1)
+                        current = current.substring(0, current.length - 1) //Se l'utente inserisce più di 16 cifre, il codice elimina l'ultima cifra aggiunta
                         creditCardNumberEditText.setText(current)
                         creditCardNumberEditText.setSelection(current.length)
                     }
@@ -131,7 +131,7 @@ class ActivityInserimentoDatiOrdine : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {
                 if (s.toString() != current) {
-                    val userInput = s.toString().replace(Regex("[^\\d]"), "")
+                    val userInput = s.toString().replace(Regex("[^\\d]"), "") //se i caratteri inseriti dall'utente non sono numerici allora non vengono scritti
                     if (userInput.length <= 4) {
                         val formatted = StringBuilder()
                         for (i in userInput.indices) {
@@ -140,6 +140,7 @@ class ActivityInserimentoDatiOrdine : AppCompatActivity() {
                             }
                             formatted.append(userInput[i])
                         }
+
                         current = formatted.toString()
                         creditCardExpiryEditText.setText(current)
                         creditCardExpiryEditText.setSelection(current.length)
@@ -240,7 +241,7 @@ class ActivityInserimentoDatiOrdine : AppCompatActivity() {
             if (offerPoints > 0 && userId != null) {
                 userController.getUserPoints(userId!!) { points ->
                     if (points != null) {
-                        val newPoints = points + offerPoints
+                        val newPoints = points + offerPoints //si restituiscono all'utente i punti che avevo utilizzato per sbloccare offerta
                         userController.updateUserPoints(userId!!, newPoints) { success ->
                             if (success) {
                                 val intent = Intent(this, MainActivity::class.java)
@@ -253,7 +254,7 @@ class ActivityInserimentoDatiOrdine : AppCompatActivity() {
                         }
                     }
                 }
-            } else {
+            } else { //nel caso in cui offerPoints = 0 perchè non è stata sbloccata nessuna offerta
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)

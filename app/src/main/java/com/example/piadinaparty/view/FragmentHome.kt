@@ -99,7 +99,9 @@ class FragmentHome : Fragment() {
     private fun updateOrder() {
         val offerPrice = selectedOffer?.price ?: 0.0
         val total = calculateTotalOrder(offerPrice)
-        totalOrderTextView.text = "Totale: €%.2f".format(total) //La TextView viene aggiornata dinamicamente per riflettere il totale corrente dell'ordine.
+
+        //La TextView viene aggiornata dinamicamente per riflettere il totale corrente dell'ordine.
+        totalOrderTextView.text = "Totale: €%.2f".format(total)
     }
 
     //funzione per calcolare il totale dell'ordine

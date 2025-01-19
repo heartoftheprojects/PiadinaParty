@@ -26,17 +26,15 @@ class ActivityConfermaOrdine : AppCompatActivity() {
         // Impostazione del testo del TextView
         textView.text = "Il tuo ordine è stato effettuato con successo"
 
-        // Gestisci il click del bottone "Chiudi"
+        // Gestione il click del bottone "Chiudi"
         buttonChiudi.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-            // Chiude l'applicazione (chiude l'activity corrente)
-            finish() // oppure puoi usare: System.exit(0) per chiudere l'app
+            finish()
         }
 
-        // Gestisci il click del bottone "Effettua un altro ordine"
+        // Gestione il click del bottone "Effettua un altro ordine"
         buttonNuovoOrdine.setOnClickListener {
-            // Naviga a ActivitySchermata2 per fare un altro ordine
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
