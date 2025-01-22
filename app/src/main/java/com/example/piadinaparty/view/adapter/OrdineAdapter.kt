@@ -38,10 +38,12 @@ class OrdineAdapter : ListAdapter<Ordine, OrdineAdapter.OrdineViewHolder>(Ordine
     }
 
     class OrdineDiffCallback : DiffUtil.ItemCallback<Ordine>() {
+        //Confronta due ordini per vedere se sono lo stesso ordine, basandosi sull'id.
         override fun areItemsTheSame(oldItem: Ordine, newItem: Ordine): Boolean {
             return oldItem.id == newItem.id
         }
 
+        //confronta il contenuto completo dei due ordini per vedere se sono uguali
         override fun areContentsTheSame(oldItem: Ordine, newItem: Ordine): Boolean {
             return oldItem == newItem
         }

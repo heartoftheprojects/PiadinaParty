@@ -16,7 +16,7 @@ class ActivityRegistrazione : AppCompatActivity() {
         binding = ActivityRegistrazioneBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        userController = UtenteController(this)
+        userController = UtenteController(this) //crea un'istanza del controller associandola all'activity
 
         binding.buttonConferma.setOnClickListener {
             val email = binding.email.text.toString()

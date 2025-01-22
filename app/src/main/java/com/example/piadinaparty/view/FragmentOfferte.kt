@@ -26,9 +26,8 @@ class FragmentOfferte : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_offerte, container, false)
 
-        // Inizializza l'adapter con la lista delle offerte e il listener per il click
+        // Inizializza l'adapter con la lista delle offerte
         offersAdapter = OfferteAdapter(offersList) { offer ->
-            // Gestisci il click sull'offerta
             Toast.makeText(activity, "Offerta selezionata: ${offer.description}", Toast.LENGTH_SHORT).show()
         }
 
@@ -87,8 +86,8 @@ class FragmentOfferte : Fragment() {
         return view
     }
 
+    // Aggiungi le offerte alla lista
     private fun populateOffersList() {
-        // Aggiungi le offerte alla lista
         offersList.add(Offerta("1", "Niente + Coca Cola", 5.0, 8))
         offersList.add(Offerta("2", "Crudo + acqua", 4.5, 4))
         offersAdapter.notifyDataSetChanged()
