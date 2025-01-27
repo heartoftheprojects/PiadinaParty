@@ -24,7 +24,7 @@ class FragmentHome : Fragment() {
     private val piadineList = mutableListOf<Item>() //lista vuota e modificabile di tipo Item
     private val bevandeList = mutableListOf<Item>()
     private lateinit var totalOrderTextView: TextView //totale ordine visibile nella home di tipo TextView
-    private var selectedOffer: Offerta? = null
+    private var selectedOffer: Offerta?  = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

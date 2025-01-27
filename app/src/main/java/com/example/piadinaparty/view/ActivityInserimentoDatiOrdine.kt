@@ -175,11 +175,11 @@ class ActivityInserimentoDatiOrdine : AppCompatActivity() {
             }
 
             // Validazione dell'orario di consegna
-            val currentTime = Calendar.getInstance()
-            val selectedTime = Calendar.getInstance().apply {
-                val parts = orario.split(":")
-                set(Calendar.HOUR_OF_DAY, parts[0].toInt())
-                set(Calendar.MINUTE, parts[1].toInt())
+            val currentTime = Calendar.getInstance() //oggetto che rappresenta data e ora attuali
+            val selectedTime = Calendar.getInstance().apply { //oggetto relativo all'orario selezionato dall'utente ma inizalmente settato con data e ora di CurrentTime e modificato tramite apply
+                val parts = orario.split(":") //parts prende la stringa orario e la stringa viene divisa in due parti separandola con i :. Come se abbiamo una lista con due elementi (ora e minuti della stringa orario)
+                set(Calendar.HOUR_OF_DAY, parts[0].toInt()) //prima parte convertita in int e settata come ora di selectedTime
+                set(Calendar.MINUTE, parts[1].toInt()) //seconda parte convertita in int e settata come minuti di selectedTime
             }
             if (selectedTime.before(currentTime.apply { add(Calendar.MINUTE, 30) }) || selectedTime.get(Calendar.HOUR_OF_DAY) !in 19..23) {
                 Toast.makeText(this, "L'orario di consegna deve essere tra le 19:00 e le 23:00 e almeno 30 minuti dopo l'orario corrente", Toast.LENGTH_SHORT).show()

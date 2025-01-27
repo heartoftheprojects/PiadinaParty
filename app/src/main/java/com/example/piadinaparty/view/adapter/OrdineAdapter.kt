@@ -19,8 +19,8 @@ class OrdineAdapter : ListAdapter<Ordine, OrdineAdapter.OrdineViewHolder>(Ordine
     }
 
     override fun onBindViewHolder(holder: OrdineViewHolder, position: Int) {
-        val order = getItem(position)
-        holder.bind(order)
+        val order = getItem(position) //recupero dei dati dell'ordine specificando la posizione
+        holder.bind(order) //passaggio dei dati dell'ordine all'istanza Holder di OrdineviewHolder cosi da aggiornare i campi
     }
 
     class OrdineViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
